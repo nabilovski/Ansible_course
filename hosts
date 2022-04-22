@@ -1,0 +1,17 @@
+[routers]
+
+R1 
+
+[switches]
+SW1 
+SW2 
+
+[servers]
+ansible2
+ansible3
+
+[ansible2]
+ansible2
+
+[ansible3]
+ansible3
