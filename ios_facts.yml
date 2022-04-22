@@ -1,0 +1,29 @@
+---
+# playbook to locally create a directory where to put the devices' facts in.
+- hosts: localhost
+
+  connection: local
+  tasks:
+    - name: create directory
+      file:
+        path: ./facts_directory
+        state: directory
+        mode: 0755
+
+
+- hosts: routers
+
+  connection: network_cli
+  tasks:
+    - name: ssh facts
+      ios_facts:
+        #gather_subset: 
+        #  - config
+      register: iosfacts_out  
+    - name: display
+      debug:
+      #  var: iosfacts_out['ansible_facts']['ansible_net_all_ipv4_addresses'] 
+        var: iosfacts_out.ansible_facts.ansible_net_all_ipv4_addresses 
+    - copy: content="{{ iosfacts_out | to_nice_json }}" dest="./facts_directory/{{inventory_hostname}}_iosfacts.json"
+  #  - copy: content="{{ iosfacts_out }}" dest="./facts_directory/{{inventory_hostname}}_iosfacts.json"
+
