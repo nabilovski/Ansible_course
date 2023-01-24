@@ -16,3 +16,4 @@ ansible2
 [ansible3]
 ansible3
 this was added manually after conflict
+ this line was added in feature1 branch
